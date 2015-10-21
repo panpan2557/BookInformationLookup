@@ -1,0 +1,45 @@
+<html>
+<form name="frm_main" id="form_main" method="post" enctype="multipart/form-data" action="http://www.e-service.nlt.go.th/home/index_search.php">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-874">         
+                <input name="keyword" type="text" class="fieldStyle" id="keyword" value="">
+                  <input type="radio" name="type" id="publish" value="1" onclick="
+                    if(this.checked==true)
+                       {  document.getElementById('sn').style.display='';
+                          document.getElementById('bn').style.display='none';
+                       }
+                    ">
+                  <input type="radio" name="type" id="book" value="2" onclick="
+                    if(this.checked==true)
+                       {  document.getElementById('sn').style.display='none';
+                          document.getElementById('bn').style.display='';
+                       }
+                    ">
+<input type="radio" name="type" id="book2" value="3" onclick="
+                    if(this.checked==true)
+                       {  document.getElementById('sn').style.display='none';
+                          document.getElementById('bn').style.display='';
+                       }
+                    "> 
+                <div align="left">ค้นตาม
+                <select name="issn" class="fieldStyle" id="issn">
+                <option value="0"> เลือก</option>
+                  <option value="1">ชื่อเรือง</option>
+                  <option value="2">ผู้รับผิดชอบการพิมพ์</option>
+                  <option value="3">ISSN</option>
+            	</div>
+                <div align="left">ค้นตาม
+                    <select name="isbn" class="fieldStyle" id="isbn">
+                                        <option value="0"> เลือก</option>
+                        <option value="1">ชื่อเรื่อง</option>
+                        <option value="2">ชื่อผู้แต่ง</option>
+                        <option value="3">หัวเรื่อง</option>
+                        <option value="4">ISBN</option>
+                        </select>
+                </div>
+              
+                <input name="button3" type="button" class="SubmitStlle" id="button3" value="ค้นหา" style="cursor:hand" onclick="
+                form_main.action='http://www.e-service.nlt.go.th/home/index_search.php';
+                form_main.submit();">
+                <input name="button3" type="reset" class="SubmitStlle" id="button4" value="ยกเลิก">
+</form>
+</html>
