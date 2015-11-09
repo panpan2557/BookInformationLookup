@@ -41,17 +41,19 @@ var htmlConvert = function(thumbnail, title, publisher, isbn) {
 
 var showResult = function(data) {
 	buttonToggle();
-	console.log(data.items);
 	var books = data.items;
+	// no books || no matched items
 	if (totalBooks == 0) {
 		$('#result').append("book not found");
-	} else {
+	} 
+	else {
 		var i, j, book, thumbnail, title, publisher, isbn;
 		for (i = 0; i < books.length; i++) {
 			book = books[i];
-			console.log(book.volumeInfo.imageLinks);
-			//no thumbnail
+			console.log(book);
+			// no thumbnail
 			if (book.volumeInfo.imageLinks == undefined) {
+				// this is "not available" image
 				thumbnail = "http://webmaster.ypsa.org/wp-content/uploads/2012/08/no_thumb.jpg";
 			} else {
 				thumbnail = book.volumeInfo.imageLinks.smallThumbnail;
@@ -59,16 +61,14 @@ var showResult = function(data) {
 
 			title = book.volumeInfo.title;
 
-			console.log(book.volumeInfo.industryIdentifiers);
-
-			//no isbn
+			// no isbn
 			if (book.volumeInfo.industryIdentifiers == undefined) {
 				isbn = "not available";
 			} else {
 				isbn = book.volumeInfo.industryIdentifiers[0].identifier;
 			}
 
-			//no publisher
+			// no publisher
 			if (book.volumeInfo.publisher == undefined) {
 				publisher = "not available";
 			} else {
@@ -89,36 +89,31 @@ var getBooks = function(searchKey, operation, startIndex, maxResults, apiKey) {
 	$.get("https://www.googleapis.com/books/v1/volumes?q=" + operation + ":" + searchKey + 
 		"&maxResults=" + maxResults + "&startIndex=" + startIndex + 
 			"&key=" + apiKey, function(data) {
-		console.log(data);
+		//data is the matched items that returned from Google books API	
 		totalBooks = data.totalItems;
 		showResult(data);
 	});
 }
 
-//Button function
-
 $('#search-button').click(function() {
 	clearResult();
+	// if the search button is clicked, then show the pagination buttons
 	$('.pagination').each(function() {
-		$(this).attr("style", ""); 
+		$(this).attr("style", "");
 	});
 	searchKey = $('#search-field').val();
-	console.log(searchKey);
 	operation = $('input:checked').attr("value");
 	getBooks(searchKey, operation, startIndex, maxResults, apiKey);
-	// var url = "test2.html";
-	// $('#result').load(url, function() {
-	// 	$('#button3').val(searchKey);
-	// 	var html = $('html').html();			
-	// });
 });
 
+//manual pagination
 $('#next-page').click(function() {
 	clearResult();
 	startIndex += maxResults - 1;
 	getBooks(searchKey, operation, startIndex, maxResults, apiKey);
 });
 
+//manual pagination
 $('#previous-page').click(function() {
 	clearResult();
 	startIndex -= maxResults - 1;
